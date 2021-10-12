@@ -4,8 +4,15 @@
 
 1. Install npm
   Please refer to this [guide](https://phoenixnap.com/kb/install-node-js-npm-on-windows).
+
+2. Download this repository / folder
+  - Click Code
+  - Download as zip
+  - Unzip the folder  
+  ![image](https://user-images.githubusercontent.com/55322546/136896008-c98e92a1-6059-4bb8-b074-e6c20d4c991c.png)
+
   
-2. Open your cmd and go to the folder containing the apac-mailer
+3. Open your cmd and go to the folder containing the apac-mailer
   - Open cmd by Windows + r, cmd enter or just search command prompt
  
 ![image](https://user-images.githubusercontent.com/55322546/136893464-90af59cf-2529-4a7b-8cd4-081256be431c.png)
@@ -32,6 +39,9 @@ npm install
 ```
 
 ## Open the app
+
+- Run the following line in cmd after npm install (Make sure your cmd is still in the apac-mailer folder)
+
 ```
 npm run electron:serve
 ```
