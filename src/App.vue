@@ -1,32 +1,130 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <v-overlay
+      :value="sending">
+      <div style="width: 100%; height: 100%; display: flex; flex-direction: column;
+       justify-content: center; align-items: center;">
+        <v-progress-circular
+            :value="progress * 100"
+            >
+        </v-progress-circular>
+        {{progress * 100}}%
+      </div>
+    </v-overlay>
+      <v-app-bar app color="primary" dark>
+        <v-app-bar-title>
+          APAC Mailer
+        </v-app-bar-title>
+        <v-spacer></v-spacer>
+          <v-btn
+              :class="{'active':currentRoute == 'home'}"
+              text
+              @click="goHome">
+              Email Settings
+          </v-btn>
+          <v-btn
+              :class="{'active':currentRoute == 'design'}"
+              text
+              @click="emailDesign">
+              Email Design
+          </v-btn>
+          <v-btn
+              :class="{'active':currentRoute == 'cert'}"
+              text
+              @click="certDesign"
+          >
+              Cert Design
+          </v-btn>
+      </v-app-bar>
+
+      <v-main id="main">
+        <Home :html="html"
+              :cert="cert"
+              @progress="changeProgress"
+              @completed="completed"
+              :class="{'selected': currentRoute == 'home'}" class="hide"/>
+        <EmailDesign @html="setDesign"
+                     :class="{'selected': currentRoute == 'design'}"
+                      class="hide"></EmailDesign>
+        <CertDesign v-if="currentRoute == 'cert'"
+                    :class="{'selected': currentRoute == 'cert'}"
+                    class="hide"
+                    @cert="saveCert"></CertDesign>
+      </v-main>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Home from "./views/Home";
+import CertDesign from "./views/CertDesign";
+import EmailDesign from "./views/EmailDesign";
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: "App",
+  components: {Home, CertDesign, EmailDesign},
+  data: () => ({
+    currentRoute: "home",
+    html: '',
+    sending: false,
+    progress: 0,
+    cert: null
+  }),
+  methods: {
+    goHome() {
+      if (this.currentRoute == "home") {
+        return;
+      }
+      this.currentRoute = "home";
+    },
+    emailDesign() {
+      if (this.currentRoute == "design") {
+        return;
+      }
+      this.currentRoute = "design";
+    },
+    certDesign() {
+      if (this.currentRoute == "cert") {
+        return;
+      }
+      this.currentRoute = "cert";
+    },
+    saveCert(cert) {
+      this.cert = cert;
+    },
+    setDesign(design) {
+      console.log(design);
+      this.html = design;
+    },
+    changeProgress(p) {
+      this.sending = true;
+      this.progress = p;
+    },
+    completed(e) {
+      console.log("Completed2");
+      this.sending = false;
+      this.progress = 0;
+      if (!e) {
+        alert("Failed to send some emails, please refer error log to see what is missing");
+      }
+    }
+  },
+  created() {
 
-#nav a {
+  }
+};
+</script>
+
+<style scoped>
+.active {
   font-weight: bold;
-  color: #2c3e50;
+  color: gold !important;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+.hide {
+  display: none;
+}
+
+.selected {
+  display: block;
 }
 </style>
