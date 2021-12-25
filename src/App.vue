@@ -5,10 +5,10 @@
       <div style="width: 100%; height: 100%; display: flex; flex-direction: column;
        justify-content: center; align-items: center;">
         <v-progress-circular
-            :value="progress * 100"
+            :value="cur * 100"
             >
         </v-progress-circular>
-        {{progress * 100}}%
+        {{progress}}
       </div>
     </v-overlay>
       <v-app-bar app color="primary" dark>
@@ -67,7 +67,8 @@ export default {
     html: '',
     sending: false,
     progress: 0,
-    cert: null
+    cert: null,
+    cur: 0
   }),
   methods: {
     goHome() {
@@ -95,16 +96,18 @@ export default {
       console.log(design);
       this.html = design;
     },
-    changeProgress(p) {
+    changeProgress(n, t) {
       this.sending = true;
-      this.progress = p;
+      this.progress = n + " / " + t;
+      this.cur = n / t;
     },
     completed(e) {
       console.log("Completed2");
       this.sending = false;
       this.progress = 0;
+      this.cur = 0;
       if (!e) {
-        alert("Failed to send some emails, please refer error log to see what is missing");
+        alert("Failed to send some emails, please check the new data on table for details");
       }
     }
   },

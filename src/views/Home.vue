@@ -195,7 +195,7 @@ export default {
   },
   methods: {
     async sendEmail() {
-      let obj = await this.emailObj();
+      let obj = this.emailObj();
       ipcRenderer.send('send-email', obj);
     },
     send() {
@@ -225,14 +225,18 @@ export default {
     },
     emailListener(evt, message) {
       if (message == 'fails') {
-        console.log("FAILED");
+        console.log(this.selected[this.currentId]);
         this.failed.push(this.selected[this.currentId]);
       }
       if (++this.currentId < this.selected.length) {
-        this.$emit('progress', this.currentId / this.selected.length);
-        this.sendEmail();
+        this.$emit('progress', this.currentId, this.selected.length);
+        setTimeout(() => this.sendEmail(), 500);
       } else {
-        this.$emit("completed", this.failed.length == 0);
+        this.currentId = 0;
+        console.log(this.failed);
+        this.$emit("completed", this.failed.length === 0);
+        this.selected = [];
+        this.recipients = this.failed;
       }
     },
     goTo(link) {
@@ -285,7 +289,7 @@ export default {
         }
       }
     },
-    async emailObj() {
+    emailObj() {
       let formatHtml = this.html;
       for (let header of this.headers) {
         formatHtml = formatHtml.replace('^*' + header.value + '*^', this.selected[this.currentId][header.value]);

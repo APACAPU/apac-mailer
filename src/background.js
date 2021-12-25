@@ -83,8 +83,9 @@ if (isDevelopment) {
 // events from renderers
 ipcMain.on('send-email', async (event, arg) => {
   await sendIt(arg).then(res=> {
-        event.reply("email-reply", "success");
-  }).catch((res,err) => {
+    event.reply("email-reply", "success");
+  }).catch(err => {
+    console.log(err);
     event.reply("email-reply", "fails");
   })
 })
@@ -97,7 +98,6 @@ async function sendIt(val) {
       pass: val.password,
     },
   });
-
   const mailOptions = {
     from: val.email,
     to: val.to,
@@ -105,16 +105,13 @@ async function sendIt(val) {
     html: val.html,
     attachments: val.attachments
   };
-
-  transporter.sendMail(mailOptions, function (err, info) {
-    if (err) {
-      return new Promise(function(resolve, reject) {
-        reject();
-      });
-    } else {
-      return new Promise(resolve => {
+  return new Promise(function(resolve, reject) {
+    transporter.sendMail(mailOptions, function (err, info) {
+      if (err) {
+        reject(err);
+      } else {
         resolve();
-      });
-    }
-  });
+      }
+    });
+  })
 }
