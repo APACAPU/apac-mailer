@@ -5,6 +5,7 @@
 Please come to this [link](https://github.com/APACAPU/apac-mailer/blob/master/win-unpacked.zip) to download the zip files and run the apac-mailer.exe
 (no virus, I promise)
 
+So you can now **skip Project Setup** and skip ahead to App Features.
 
 ## Project setup
 
