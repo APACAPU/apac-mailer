@@ -2,7 +2,7 @@
 
 ## Thanks to magic, now the executable works!
 
-Please come to this link to download the zip files and run the apac-mailer.exe
+Please come to this [link](https://github.com/APACAPU/apac-mailer/blob/master/win-unpacked.zip) to download the zip files and run the apac-mailer.exe
 (no virus, I promise)
 
 
