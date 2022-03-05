@@ -93,7 +93,6 @@ export default {
       this.cert = cert;
     },
     setDesign(design) {
-      console.log(design);
       this.html = design;
     },
     changeProgress({cur, total}) {
@@ -102,7 +101,6 @@ export default {
       this.cur = cur / total;
     },
     completed(e) {
-      console.log("Completed2");
       this.sending = false;
       this.progress = 0;
       this.cur = 0;
@@ -111,8 +109,10 @@ export default {
       }
     }
   },
-  created() {
-
+  mounted() {
+    window.onbeforeunload = function(e){
+      e.preventDefault();
+    };
   }
 };
 </script>

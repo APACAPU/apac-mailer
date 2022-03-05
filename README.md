@@ -1,5 +1,11 @@
 # apac-mailer
 
+## Thanks to magic, now the executable works!
+
+Please come to this link to download the zip files and run the apac-mailer.exe
+(no virus, I promise)
+
+
 ## Project setup
 
 1. Install npm (My npm version is 6.14.15)
@@ -99,6 +105,8 @@ the preview being updated.
 
 <hr>
 
+Known issue: Net::error from reading email editor,
 
+Solution: Add https: in front of line 2834, or the variable scriptUrl in vue-email-editor.common.js from Vue Email Editor.
 
 * This app is made for APAC, but is free to be used & adapted by others.

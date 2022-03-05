@@ -51,7 +51,6 @@ export default {
       }
     },
     storeDesign(design) {
-      console.log(design);
       let json = JSON.parse(design);
       this.$refs.emailEditor.editor.loadDesign(json);
     },

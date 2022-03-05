@@ -319,6 +319,8 @@ export default {
         pdf.setTextColor(this.cert.color.r, this.cert.color.g, this.cert.color.b);
         pdf.text(this.selected[this.currentId][this.nameCol], this.cert.x, this.cert.y, this.cert.alignCenter ? "center" : "left");
         let data = pdf.output('dataurl');
+        console.log("HIHI")
+
         obj.attachments.push({
           filename: (this.cert.fileName == '' ? 'attachment' : this.cert.fileName) + '.pdf',
           content: data.split("base64,")[1],
