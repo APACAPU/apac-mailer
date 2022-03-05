@@ -2,7 +2,7 @@
 
 ## Project setup
 
-1. Install npm
+1. Install npm (My npm version is 6.14.15)
   Please refer to this [guide](https://phoenixnap.com/kb/install-node-js-npm-on-windows).
 
 2. Download this repository / folder
@@ -46,6 +46,8 @@ npm install
 npm run electron:serve
 ```
 
+**Note: sometimes all inputs are unresponsive, then you need to click select file from email tab and click cancel.**
+
 ![image](https://user-images.githubusercontent.com/55322546/136893827-ccb22f22-6d89-41fd-b259-80f57e80683c.png)
 
 ## App features
@@ -57,8 +59,9 @@ npm run electron:serve
   
   ![image](https://user-images.githubusercontent.com/55322546/136894958-1703f309-d9d6-47df-8878-c89e8651c637.png)
   
-  - Select a csv file, if you wish to, you can change the separator
+  - Select a csv file, if you wish to, ~~you can change the separator~~
   - Select the people whom you wish to email to
+  - Remember not to select any empty rows at the end if there are any
   
   ![image](https://user-images.githubusercontent.com/55322546/136895028-20437009-aba3-4abd-a836-4647eea96497.png)
 
@@ -90,7 +93,12 @@ npm run electron:serve
   - Sometimes if the pdf is not updating, click any of the slider.
   - Due to unknown issue, the fonts are kinda above 0, so you must set Y to bigger than 0 to start seeing the words
   - The words in the file will be replaced with name column as specified in email setting
+  - You can set align center to true, then the X position will be used as the center of the texts. 
+  - Note: Sometimes the cert will be unresponsive, then you need to drag the X & Y slider and you'll see
+the preview being updated.
 
 <hr>
+
+
 
 * This app is made for APAC, but is free to be used & adapted by others.

@@ -161,6 +161,13 @@
               v-model="names.name"
               @input="createPdf"></v-text-field>
         </v-col>
+        <v-col cols="3" class="pl-4">
+          <v-switch
+              v-model="alignCenter"
+              :label="`Align Center: ${alignCenter.toString()}`"
+              hide-details
+          ></v-switch>
+        </v-col>
       </v-row>
       <div class="text-center">
         <v-btn color="primary" @click="saveCert" class="mb-7">Save</v-btn>
@@ -188,7 +195,7 @@ export default {
         this.pdf.addImage(this.imgPath, this.imgType, 0, 0, 298, 210);
       }
 
-      this.pdf.text(this.names.name, this.names.x, this.names.y);
+      this.pdf.text(this.names.name, this.names.x, this.names.y, this.alignCenter ? "center" : "left");
       document.getElementById("cert").src = this.pdf.output('bloburl')
     },
     loadImg(e) {
@@ -228,8 +235,9 @@ export default {
         y: this.names.y,
         width: width,
         height: height,
-        color: this.color
-      }
+        color: this.color,
+        alignCenter: this.alignCenter
+      };
     },
   },
   data() {
@@ -249,7 +257,8 @@ export default {
         "g": 0,
         "b": 0,
         "a": 1
-      }
+      },
+      alignCenter: false
     }
   },
   created() {

@@ -164,6 +164,7 @@
 const {ipcRenderer} = window.require('electron');
 const { shell } = require('electron');
 import { jsPDF } from "jspdf";
+import * as Papa from 'papaparse';
 
 export default {
   name: "Home",
@@ -220,7 +221,8 @@ export default {
           return;
         }
       }
-      this.$emit('progress', this.currentId);
+      this.$emit('progress', {cur:this.currentId, total:this.selected.length});
+      this.failed = [];
       this.sendEmail();
     },
     emailListener(evt, message) {
@@ -229,7 +231,7 @@ export default {
         this.failed.push(this.selected[this.currentId]);
       }
       if (++this.currentId < this.selected.length) {
-        this.$emit('progress', this.currentId, this.selected.length);
+        this.$emit('progress', {cur:this.currentId, total:this.selected.length});
         setTimeout(() => this.sendEmail(), 500);
       } else {
         this.currentId = 0;
@@ -256,13 +258,15 @@ export default {
       }
     },
     formatCSV(csv) {
-      let tmp = csv.split("\n");
+      let output = Papa.parse(csv.trim());
       this.headers = [];
       this.recipients = [];
-      for (let i = 0; i < tmp.length; i++) {
-        let line = tmp[i].trim().split(this.separator == "" ? "," : this.separator);
+
+      this.headers = [];
+      this.recipients = [];
+      for (let i = 0; i < output.data.length; i++) {
         if (i == 0) {
-          for (let val of line) {
+          for (let val of output.data[i]) {
             this.headers.push({
               text: val,
               value: val
@@ -271,12 +275,13 @@ export default {
           this.emailCol = this.headers[0].value;
         } else {
           let newLine = {};
-          for (let val in line) {
-            newLine[this.headers[val].value] = line[val];
+          for (let val in output.data[i]) {
+            newLine[this.headers[val].value] = output.data[i][val];
           }
           this.recipients.push(newLine);
         }
       }
+      console.log(this.recipients);
     },
     setAttachments(e) {
       this.attachments = [];
@@ -312,7 +317,7 @@ export default {
         pdf.setFontSize(this.cert.fontSize);
         pdf.addImage(this.cert.imgPath, this.cert.imgType, 0, 0, this.cert.width,  this.cert.height);
         pdf.setTextColor(this.cert.color.r, this.cert.color.g, this.cert.color.b);
-        pdf.text(this.selected[this.currentId][this.nameCol], this.cert.x, this.cert.y);
+        pdf.text(this.selected[this.currentId][this.nameCol], this.cert.x, this.cert.y, this.cert.alignCenter ? "center" : "left");
         let data = pdf.output('dataurl');
         obj.attachments.push({
           filename: (this.cert.fileName == '' ? 'attachment' : this.cert.fileName) + '.pdf',

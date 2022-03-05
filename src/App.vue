@@ -46,7 +46,7 @@
         <EmailDesign @html="setDesign"
                      :class="{'selected': currentRoute == 'design'}"
                       class="hide"></EmailDesign>
-        <CertDesign v-if="currentRoute == 'cert'"
+        <CertDesign
                     :class="{'selected': currentRoute == 'cert'}"
                     class="hide"
                     @cert="saveCert"></CertDesign>
@@ -96,10 +96,10 @@ export default {
       console.log(design);
       this.html = design;
     },
-    changeProgress(n, t) {
+    changeProgress({cur, total}) {
       this.sending = true;
-      this.progress = n + " / " + t;
-      this.cur = n / t;
+      this.progress = cur + " / " + total;
+      this.cur = cur / total;
     },
     completed(e) {
       console.log("Completed2");
