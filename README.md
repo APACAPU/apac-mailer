@@ -40,6 +40,7 @@ Please come to this [link](https://github.com/APACAPU/apac-mailer/blob/master/wi
   ![image](https://user-images.githubusercontent.com/55322546/136895349-baa65d2d-c709-4246-89e3-f5bcec7c07f1.png)
 
 ### 3. Cert Design
+  - **Must use JPG format**, PNG format is too big, which causes the app to crash when trying to create Blob URL for email sending
   - Will only be used if you checked 'use cert' in email settings
   
   ![image](https://user-images.githubusercontent.com/55322546/136895503-0cf74679-6d8c-441a-a3a0-ad008a46717d.png)
